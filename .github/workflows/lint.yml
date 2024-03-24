@@ -17,24 +17,18 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: "3.12"
+      - name: Install Rye
+        uses: baptiste0928/cargo-install@v3
+        with:
+          crate: rye
+          git: https://github.com/mitsuhiko/rye
+          branch: main
       - name: Install dependencies
         run: |
-          # Install ruff mypy and stub libs
-          python -m pip install --upgrade pip
-          pip install -r requirements-test.txt
+          rye sync
       - name: Lint with ruff
         run: |
-          ruff ${{ inputs.lint_dir }}
+          rye run ruff ${{ inputs.lint_dir }}
       - name: Lint with mypy
         run: |
-          mypy ${{ inputs.lint_dir }}
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
-      - name: Install cspell
-        run: |
-          npm install -g cspell
-      - name: Spell check with cspell
-        run: |
-          cspell ${{ inputs.lint_dir }}**/*.* --no-summary --no-progress
+          rye run mypy ${{ inputs.lint_dir }}

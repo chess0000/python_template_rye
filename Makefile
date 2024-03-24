@@ -4,6 +4,8 @@ install:
 	rye pin 3.12
 	rye sync
 	rye run pre-commit install
+	cp .env.example .env
+	mkdir logs
 
 # main.pyを実行する
 .PHONY: run_main

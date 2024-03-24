@@ -26,4 +26,3 @@ jobs:
     with:
       package_dir: src/
       test_dir: tests/
-      requirements_file: src/requirements.text
