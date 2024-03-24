@@ -1,0 +1,56 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+repos:
+  # Ruff
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    # Ruff version.
+    rev: v0.3.4
+    hooks:
+      # Run the linter.
+      - id: ruff
+        name: ruff
+        description: "Run 'ruff' for extremely fast Python linting"
+        entry: ruff check --force-exclude
+        language: python
+        types_or: [python, pyi]
+        # --fix: enable lint fixes
+        args: [--fix]
+        require_serial: true
+        additional_dependencies: []
+        minimum_pre_commit_version: "2.9.2"
+      # Run the formatter.
+      - id: ruff-format
+        name: ruff-format
+        description: "Run 'ruff format' for extremely fast Python formatting"
+        entry: ruff format --force-exclude
+        language: python
+        types_or: [python, pyi]
+        args: []
+        require_serial: true
+        additional_dependencies: []
+        minimum_pre_commit_version: "2.9.2"
+
+  # mypy
+  -   repo: https://github.com/pre-commit/mirrors-mypy
+      rev: v1.9.0
+      hooks:
+      # Run the mypy.
+      - id: mypy
+        name: mypy
+        description: "Run 'mypy' for Python linting"
+        entry: mypy
+        language: python
+        require_serial: true
+        # Add types package list
+        exclude: ^tests/|^any-path/ # mypyの除外ディレクトリ。正規表現で記述できる
+        additional_dependencies: [pydantic, types-PyYAML]
+        minimum_pre_commit_version: '2.9.2'
+
+  # public
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: trailing-whitespace # 行末の空白を削除する
+      - id: end-of-file-fixer # ファイルの最後に改行を追加する
+      - id: check-yaml # yamlの構文チェック
+      - id: check-added-large-files # 大きなファイルがコミットされないようにする

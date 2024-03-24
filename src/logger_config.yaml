@@ -1,0 +1,49 @@
+version: 1
+disable_existing_loggers: false
+
+formatters:
+  normal:
+    format: "[%(asctime)s - %(levelname)s - %(filename)s(func:%(funcName)s, line:%(lineno)d)] %(message)s"
+
+handlers:
+  consoleHandler:
+    class: logging.StreamHandler
+    level: DEBUG
+    formatter: normal
+    stream: ext://sys.stdout
+
+  applicationHandler:
+    class: logging.handlers.RotatingFileHandler
+    level: INFO
+    formatter: normal
+    filename: logs/app.log # project root
+    maxBytes: 100000
+    backupCount: 10
+    encoding: utf8
+
+  errorHandler:
+    class: logging.handlers.RotatingFileHandler
+    level: ERROR
+    formatter: normal
+    filename: logs/error.log # project root
+    maxBytes: 100000
+    backupCount: 10
+    encoding: utf8
+
+loggers:
+  console:
+    level: DEBUG
+    handlers: [consoleHandler]
+    propagate: false
+  application:
+    level: DEBUG
+    handlers: [consoleHandler, applicationHandler]
+    propagate: false
+  error:
+    level: DEBUG
+    handlers: [consoleHandler, errorHandler]
+    propagate: false
+
+root:
+  level: DEBUG
+  handlers: [consoleHandler, applicationHandler, errorHandler]

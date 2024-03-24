@@ -1,0 +1,15 @@
+{
+  "recommendations": [
+    "ms-python.python", // msut
+    "njpwerner.autodocstring",
+    "tamasfe.even-better-toml",
+    "ms-python.vscode-pylance", // must
+    "charliermarsh.ruff", // must
+    "ms-python.mypy-type-checker", // must
+  ],
+  "unwantedRecommendations": [
+    "ms-python.black-formatter",
+    "ms-python.isort",
+    "ms-python.flake8"
+  ]
+}
